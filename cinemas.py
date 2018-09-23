@@ -1,5 +1,6 @@
 from datetime import date
 import re
+import sys
 
 import requests
 from requests.exceptions import ConnectionError
@@ -29,6 +30,9 @@ def get_afisha_movies_info(scheduled_date):
             url='https://www.afisha.ru/msk/schedule_cinema/',
             params=params,
         )
+
+        if not afisha_movies_info_page:
+            break
 
         yield [
             {
@@ -101,6 +105,9 @@ def main():
         movies_info.extend(
             get_kinopoisk_movies_info(afisha_movies_info_page)
         )
+
+    if not movies_info:
+        sys.exit('Could not get info about movies')
 
     top_rated_movies_info = get_top_rated_movies_info(movies_info)
 

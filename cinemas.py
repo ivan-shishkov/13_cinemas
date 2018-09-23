@@ -78,14 +78,36 @@ def get_top_rated_movies_info(movies_info, movies_count=10):
     )[:movies_count]
 
 
+def print_movies_info(movies_info, title):
+    print(title)
+    print('{:-<30}'.format(''))
+
+    for movie_number, movie_info in enumerate(movies_info, start=1):
+        print('Movie #{}'.format(movie_number))
+        print('Title: {}'.format(movie_info.title))
+        print('Production year: {}'.format(movie_info.year))
+        print('Rating: {}'.format(movie_info.rating))
+        print('Votes: {}'.format(movie_info.votes))
+        print('{:-<30}'.format(''))
+
+
 def main():
     scheduled_date = date.today().strftime('%d-%m-%Y')
     movies_info = []
+
+    print('Getting info about movies...')
 
     for afisha_movies_info_page in get_afisha_movies_info(scheduled_date):
         movies_info.extend(
             get_kinopoisk_movies_info(afisha_movies_info_page)
         )
+
+    top_rated_movies_info = get_top_rated_movies_info(movies_info)
+
+    print_movies_info(
+        movies_info=top_rated_movies_info,
+        title='{} Most Top Rated Movies'.format(len(top_rated_movies_info)),
+    )
 
 
 if __name__ == '__main__':

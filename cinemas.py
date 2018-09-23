@@ -70,6 +70,14 @@ def get_kinopoisk_movies_info(afisha_movies_info):
     return movies_info
 
 
+def get_top_rated_movies_info(movies_info, movies_count=10):
+    return sorted(
+        movies_info,
+        key=lambda movie: movie.rating if movie.rating else 0,
+        reverse=True,
+    )[:movies_count]
+
+
 def main():
     scheduled_date = date.today().strftime('%d-%m-%Y')
     movies_info = []

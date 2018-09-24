@@ -31,7 +31,7 @@ def get_afisha_movies_info(scheduled_date):
             params=params,
         )
 
-        if not afisha_movies_info_page:
+        if afisha_movies_info_page is None:
             break
 
         yield [
